@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="vfor-example">
     <h5>{{ msg }}</h5>
     <div id="todo-list-example">
       <!-- 提交事件不再重载页面 -->
@@ -21,10 +21,21 @@
     <ul>
       <VforTodoItem 
         v-for="(todo,index) in todos" 
-        :key="todo.id" 
+        :key="index" 
         :todo="todo" 
-        @remove="todos.splice(index,1)"
-      ></VforTodoItem>
+        @remove="delItem"
+      >
+        <!-- <span>this is default slot</span> -->
+        <template v-slot:id="props">
+          <span>{{props.id}}</span>
+        </template>
+        <template v-slot:title="props">
+          <i :style="{color: props.checked ? 'red' : 'blue'}">（this is title slot）</i>
+        </template>
+        <template v-slot:footer>
+          <span>（this is footer slot）</span>
+        </template>
+      </VforTodoItem>
     </ul>
   </div>
 </template>
@@ -34,7 +45,7 @@
 import VforTodoItem from './VforTodoItem.vue';
 
 export default {
-  name: 'VforExample',
+  name: 'vfor-example',
   props: {
     msg: String
   },
@@ -59,7 +70,11 @@ export default {
         title: this.newTodoText
       });
       this.newTodoText = '';
-    }  
+    },
+    delItem (propTitle) {
+      const index = this.todos.findIndex(todo => todo.title === propTitle)
+      this.todos.splice(index, 1)
+    }
   }
 }
 </script>
@@ -67,4 +82,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h5{ font-weight: normal }
+li {
+  list-style: none;
+}
 </style>

@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <VforExample msg="Welcome to Your Vue.js App"/>
+    <!-- <PersonInfo/> -->
+    <Spike/>
   </div>
 </template>
 
 <script>
-import VforExample from './components/VforExample.vue'
+// import PersonInfo from '@/components/PersonInfo.vue'
+import Spike from '@/components/Spike.vue'
 
 export default {
   name: 'app',
   components: {
-    VforExample
+    // PersonInfo,
+    Spike
   }
 }
 </script>
